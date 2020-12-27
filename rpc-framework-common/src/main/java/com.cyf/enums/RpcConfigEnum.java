@@ -22,5 +22,5 @@ public enum RpcConfigEnum {
      */
     ZK_ADDRESS("rpc.zookeeper.address");
 
-    String value;
+    private final String value;
 }
