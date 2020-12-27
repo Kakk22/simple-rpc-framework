@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.type.AnnotationMetadata;
+import org.springframework.core.type.StandardAnnotationMetadata;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,6 +29,12 @@ public class CustomScannerRegistrar implements ImportBeanDefinitionRegistrar, Re
         this.resourceLoader = resourceLoader;
     }
 
+    /**
+     * 动态注册指定注解的bean
+     *
+     * @param importingClassMetadata 当前类的注解信息
+     * @param registry               注册类,其registerBeanDefinition()可以注册bean
+     */
     @Override
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
         // 获取RpcScan 注解的属性和值
@@ -38,7 +45,8 @@ public class CustomScannerRegistrar implements ImportBeanDefinitionRegistrar, Re
             rpcScanBasePackages = rpcScanAnnotationAttributes.getStringArray(BASE_PACKAGE_ATTRIBUTE_NAME);
         }
         if (rpcScanBasePackages.length == 0) {
-
+            // 暂时不是很能理解这一步
+            rpcScanBasePackages = new String[]{((StandardAnnotationMetadata) importingClassMetadata).getIntrospectedClass().getPackage().getName()};
         }
         // 扫描rpcService 注解
         CustomScanner rpcServiceScanner = new CustomScanner(registry, RpcService.class);
