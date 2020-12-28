@@ -3,6 +3,7 @@ package com.cyf.provider;
 import com.cyf.entity.RpcServiceProperties;
 import com.cyf.enums.RpcErrorMessagesEnum;
 import com.cyf.exception.RpcException;
+import com.cyf.extension.ExtensionLoader;
 import com.cyf.registry.ServiceRegistry;
 import com.cyf.transport.netty.server.NettyService;
 import lombok.SneakyThrows;
@@ -29,8 +30,8 @@ public class ServiceProviderImpl implements ServiceProvider {
     public ServiceProviderImpl() {
         this.serviceMap = new ConcurrentHashMap<>();
         this.registeredService = ConcurrentHashMap.newKeySet();
-        // todo spi服务
-        this.serviceRegistry = null;
+        // spi 扩展
+        this.serviceRegistry = ExtensionLoader.getExtensionLoader(ServiceRegistry.class).getExtension("zk");
     }
 
     @Override
