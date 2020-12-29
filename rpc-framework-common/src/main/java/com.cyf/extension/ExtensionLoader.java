@@ -171,7 +171,6 @@ public final class ExtensionLoader<T> {
                         log.error("cloud not load class,class name:{}", clazzName);
                     }
                 }
-
             }
         } catch (IOException e) {
             log.error(e.getMessage());

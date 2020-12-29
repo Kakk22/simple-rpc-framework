@@ -1,6 +1,5 @@
 package com.cyf.registry.zk.util;
 
-import com.cyf.enums.RpcConfigEnum;
 import com.cyf.util.PropertiesFileUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.RetryPolicy;
@@ -13,6 +12,9 @@ import org.apache.zookeeper.CreateMode;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static com.cyf.enums.RpcConfigEnum.RPC_CONFIG_ENUM;
+import static com.cyf.enums.RpcConfigEnum.ZK_ADDRESS;
 
 /**
  * zk 客户端 工具类
@@ -40,10 +42,10 @@ public final class CuratorUtils {
             return zkClient;
         }
         // 检查是否自定义zk地址
-        Properties properties = PropertiesFileUtil.readPropertiesFile(RpcConfigEnum.RPC_CONFIG_ENUM.getValue());
+        Properties properties = PropertiesFileUtil.readPropertiesFile(RPC_CONFIG_ENUM.getValue());
         String zookeeperAddress = properties != null
-                && properties.getProperty(RpcConfigEnum.ZK_ADDRESS.getValue()) != null
-                ? properties.getProperty(RpcConfigEnum.ZK_ADDRESS.getValue()) : DEFAULT_ZK_ADDRESS;
+                && properties.getProperty(ZK_ADDRESS.getValue()) != null
+                ? properties.getProperty(ZK_ADDRESS.getValue()) : DEFAULT_ZK_ADDRESS;
         // 设置睡眠时间及最大重试次数
         RetryPolicy retryPolicy = new ExponentialBackoffRetry(BASE_SLEEP_TIME, MAX_RETRIES);
         zkClient = CuratorFrameworkFactory.builder()
