@@ -91,6 +91,7 @@ public final class ExtensionLoader<T> {
         T instance = (T) EXTENSION_INSTANCE.get(clazz);
         if (instance == null) {
             try {
+                // 这里创建一个读取到的实例对象
                 EXTENSION_INSTANCE.putIfAbsent(clazz, clazz.newInstance());
                 instance = (T) EXTENSION_INSTANCE.get(clazz);
             } catch (Exception e) {

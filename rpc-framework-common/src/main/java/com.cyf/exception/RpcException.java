@@ -10,7 +10,13 @@ import com.cyf.enums.RpcErrorMessagesEnum;
  **/
 public class RpcException extends RuntimeException {
 
+    private static final long serialVersionUID = -2096719445109708205L;
+
     public RpcException(RpcErrorMessagesEnum rpcErrorMessagesEnum) {
         super(rpcErrorMessagesEnum.getMessages());
+    }
+
+    public RpcException(String message,Throwable throwable) {
+        super(message,throwable);
     }
 }
