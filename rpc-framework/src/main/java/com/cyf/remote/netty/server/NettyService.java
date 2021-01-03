@@ -74,10 +74,10 @@ public class NettyService {
                             ChannelPipeline pipeline = ch.pipeline();
                             //30 秒之内没有收到客户端请求的话就关闭连接
                             pipeline.addLast(new IdleStateHandler(30, 0, 0, SECONDS));
-                            pipeline.addLast(new RpcMessageDecoder());
                             pipeline.addLast(new RpcMessageEncoder());
+                            pipeline.addLast(new RpcMessageDecoder());
                             // 这里进行业务处理
-                            pipeline.addLast(defaultChannelGroup,new NettyRpcServiceHandler());
+                            pipeline.addLast(defaultChannelGroup, new NettyRpcServiceHandler());
                         }
                     });
             // 同步绑定端口

@@ -1,4 +1,5 @@
 import com.cyf.annotation.RpcScan;
+import com.cyf.spring.HelloService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**

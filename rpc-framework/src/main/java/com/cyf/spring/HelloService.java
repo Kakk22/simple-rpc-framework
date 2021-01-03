@@ -1,3 +1,5 @@
+package com.cyf.spring;
+
 import com.cyf.annotation.RpcService;
 
 /**
