@@ -25,7 +25,7 @@ public class RpcMessage {
     /**
      * 压缩类型
      */
-    private byte compress;
+    private byte compressType;
     /**
      * 请求id
      */

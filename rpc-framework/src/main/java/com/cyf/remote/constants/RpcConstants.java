@@ -16,7 +16,7 @@ public interface RpcConstants {
      */
     byte VERSION = 1;
     byte TOTAL_LENGTH = 16;
-    byte REQUEST_TYPE = 1;
+    final byte REQUEST_TYPE = 1;
     byte RESPONSE_TYPE = 2;
     /**
      * ping

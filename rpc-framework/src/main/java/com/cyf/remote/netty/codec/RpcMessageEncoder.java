@@ -54,6 +54,8 @@ public class RpcMessageEncoder extends MessageToByteEncoder<RpcMessage> {
             out.writeByte(msg.getCodec());
             out.writeByte(CompressTypeEnum.GZIP.getCode());
             out.writeInt(ATOMIC_INTEGER.getAndIncrement());
+            //empty body
+            byte[] bodyBytes = null;
             // 头长度
             int fullLength = HEAD_LENGTH;
             //非心跳包
@@ -64,17 +66,21 @@ public class RpcMessageEncoder extends MessageToByteEncoder<RpcMessage> {
                 //SPI获取序列化器
                 Serializer serializer = ExtensionLoader.getExtensionLoader(Serializer.class).getExtension(codecName);
                 //序列化数据
-                byte[] bodyBytes = serializer.serialize(msg.getData());
+                bodyBytes = serializer.serialize(msg.getData());
                 //获取设置的压缩
-                String compressName = CompressTypeEnum.getName(msg.getCompress());
+                String compressName = CompressTypeEnum.getName(msg.getCompressType());
                 //获取压缩器
                 Compress compress = ExtensionLoader.getExtensionLoader(Compress.class).getExtension(compressName);
                 bodyBytes = compress.compress(bodyBytes);
                 //记录总的长度
                 fullLength += bodyBytes.length;
+            }
+
+            if (bodyBytes != null) {
                 //写入数据
                 out.writeBytes(bodyBytes);
             }
+
             int writerIndex = out.writerIndex();
             //写入int改为 长度域下标
             out.writeInt(writerIndex - fullLength - MAGIC_NUMBER.length + 1);

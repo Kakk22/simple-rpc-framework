@@ -32,7 +32,7 @@ public class CustomShutdownHook {
             } catch (UnknownHostException e) {
                 log.error(e.getMessage());
             }
-            // 关闭线程池
+            //todo 关闭线程池
         }));
     }
 }
