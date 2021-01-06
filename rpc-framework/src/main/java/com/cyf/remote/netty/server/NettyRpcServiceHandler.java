@@ -1,6 +1,8 @@
 package com.cyf.remote.netty.server;
 
+import com.cyf.enums.CompressTypeEnum;
 import com.cyf.enums.RpcResponseMessagesEnum;
+import com.cyf.enums.SerializeTypeEnum;
 import com.cyf.factory.SingletonFactory;
 import com.cyf.remote.dto.RpcMessage;
 import com.cyf.remote.dto.RpcRequest;
@@ -42,7 +44,9 @@ public class NettyRpcServiceHandler extends ChannelInboundHandlerAdapter {
                 log.info("server receive msg:{}", msg);
                 RpcMessage rpcMessage = (RpcMessage) msg;
                 RpcMessage responseMessage = new RpcMessage();
-                //todo 设置序列化类型及压缩类型
+                //设置序列化类型及压缩类型
+                responseMessage.setCompressType(CompressTypeEnum.GZIP.getCode());
+                responseMessage.setCodec(SerializeTypeEnum.KRYO.getCode());
                 byte messageType = rpcMessage.getMessageType();
                 if (messageType == HEARTBEAT_REQUEST_TYPE) {
                     // ping pong 心跳连接

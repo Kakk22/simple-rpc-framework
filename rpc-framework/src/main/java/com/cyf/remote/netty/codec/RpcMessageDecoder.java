@@ -4,7 +4,6 @@ import com.cyf.compress.Compress;
 import com.cyf.enums.CompressTypeEnum;
 import com.cyf.enums.SerializeTypeEnum;
 import com.cyf.extension.ExtensionLoader;
-import com.cyf.remote.constants.RpcConstants;
 import com.cyf.remote.dto.RpcMessage;
 import com.cyf.remote.dto.RpcRequest;
 import com.cyf.remote.dto.RpcResponse;
@@ -12,10 +11,8 @@ import com.cyf.serialize.Serializer;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.MessageToByteEncoder;
 import lombok.extern.slf4j.Slf4j;
 
-import java.nio.ByteOrder;
 import java.util.Arrays;
 
 import static com.cyf.remote.constants.RpcConstants.*;
@@ -137,9 +134,11 @@ public class RpcMessageDecoder extends LengthFieldBasedFrameDecoder {
                 Serializer serializer = ExtensionLoader.getExtensionLoader(Serializer.class).getExtension(serializerName);
                 if (msgType == REQUEST_TYPE) {
                     RpcRequest data = serializer.deserialize(body, RpcRequest.class);
+                    log.debug("get rpc request data:{}", data.toString());
                     rpcMessage.setData(data);
                 } else {
                     RpcResponse data = serializer.deserialize(body, RpcResponse.class);
+                    log.debug("get rpc response:{}", data.toString());
                     rpcMessage.setData(data);
                 }
             }

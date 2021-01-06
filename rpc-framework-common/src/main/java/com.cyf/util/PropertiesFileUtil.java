@@ -30,6 +30,7 @@ public final class PropertiesFileUtil {
         try (InputStreamReader reader = new InputStreamReader(
                 new FileInputStream(rpcConfigPath), StandardCharsets.UTF_8)) {
             properties = new Properties();
+            //加载流对象 properties实际为一个map 键值对形式
             properties.load(reader);
         } catch (Exception e) {
             log.error("error when read properties file {}", fileName);
