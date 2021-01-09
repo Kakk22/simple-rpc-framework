@@ -1,0 +1,2 @@
+random = com.cyf.loadbalance.loadbalancer.RandomLoadBalance
+hash = com.cyf.loadbalance.loadbalancer.ConsistentHashLoadBalance
