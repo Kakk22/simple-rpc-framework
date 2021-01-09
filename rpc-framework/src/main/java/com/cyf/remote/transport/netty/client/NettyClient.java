@@ -12,7 +12,6 @@ import com.cyf.remote.dto.RpcResponse;
 import com.cyf.remote.transport.RpcRequestTransport;
 import com.cyf.remote.transport.netty.codec.RpcMessageDecoder;
 import com.cyf.remote.transport.netty.codec.RpcMessageEncoder;
-import com.cyf.remote.transport.netty.server.NettyRpcServiceHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -102,7 +101,7 @@ public class NettyClient implements RpcRequestTransport {
                 }
             });
         }
-        return null;
+        return resultFuture;
     }
 
     public Channel getChannel(InetSocketAddress inetSocketAddress) {

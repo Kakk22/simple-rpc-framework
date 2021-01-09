@@ -14,7 +14,9 @@ public enum RpcErrorMessagesEnum {
     /**
      * 找不到指定服务
      */
-    SERVICE_CAN_NOT_FOUND("未找到指定服务");
+    SERVICE_CAN_NOT_FOUND("未找到指定服务"),
+    SERVICE_INVOCATION_FAILURE("远程服务调用失败"),
+    REQUEST_NOT_MATCH_RESPONSE("返回结果不匹配");
 
     private final String messages;
 }

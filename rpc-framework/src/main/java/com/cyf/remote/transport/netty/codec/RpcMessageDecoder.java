@@ -109,7 +109,6 @@ public class RpcMessageDecoder extends LengthFieldBasedFrameDecoder {
                 .messageType(msgType)
                 .compressType(compressType)
                 .codec(codec)
-                .requestId(requestId)
                 .build();
 
         if (msgType == HEARTBEAT_REQUEST_TYPE) {

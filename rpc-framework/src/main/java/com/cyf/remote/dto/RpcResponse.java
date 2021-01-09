@@ -33,7 +33,7 @@ public class RpcResponse<T> implements Serializable {
     /**
      * code
      */
-    private int code;
+    private Integer code;
     /**
      * 数据对象
      */
