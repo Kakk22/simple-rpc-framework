@@ -1,4 +1,4 @@
-package com.cyf.remote.netty.codec;
+package com.cyf.remote.transport.netty.codec;
 
 import com.cyf.compress.Compress;
 import com.cyf.enums.CompressTypeEnum;
@@ -52,7 +52,7 @@ public class RpcMessageEncoder extends MessageToByteEncoder<RpcMessage> {
             out.writerIndex(out.writerIndex() + 4);
             out.writeByte(msg.getMessageType());
             out.writeByte(msg.getCodec());
-            out.writeByte(CompressTypeEnum.GZIP.getCode());
+            out.writeByte(msg.getCompressType());
             out.writeInt(ATOMIC_INTEGER.getAndIncrement());
             //empty body
             byte[] bodyBytes = null;

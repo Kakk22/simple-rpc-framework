@@ -1,4 +1,4 @@
-package com.cyf.remote.netty.server;
+package com.cyf.remote.transport.netty.server;
 
 import com.cyf.enums.CompressTypeEnum;
 import com.cyf.enums.RpcResponseMessagesEnum;

@@ -1,4 +1,4 @@
-package com.cyf.remote.netty.codec;
+package com.cyf.remote.transport.netty.codec;
 
 import com.cyf.compress.Compress;
 import com.cyf.enums.CompressTypeEnum;

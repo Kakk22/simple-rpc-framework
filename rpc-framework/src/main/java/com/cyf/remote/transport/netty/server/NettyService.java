@@ -1,12 +1,12 @@
-package com.cyf.remote.netty.server;
+package com.cyf.remote.transport.netty.server;
 
 import com.cyf.config.CustomShutdownHook;
 import com.cyf.entity.RpcServiceProperties;
 import com.cyf.factory.SingletonFactory;
 import com.cyf.provider.ServiceProvider;
 import com.cyf.provider.ServiceProviderImpl;
-import com.cyf.remote.netty.codec.RpcMessageDecoder;
-import com.cyf.remote.netty.codec.RpcMessageEncoder;
+import com.cyf.remote.transport.netty.codec.RpcMessageDecoder;
+import com.cyf.remote.transport.netty.codec.RpcMessageEncoder;
 import com.cyf.util.concurrent.threadpool.ThreadPoolFactoryUtil;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
