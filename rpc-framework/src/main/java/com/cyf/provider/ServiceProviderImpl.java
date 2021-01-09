@@ -5,7 +5,7 @@ import com.cyf.enums.RpcErrorMessagesEnum;
 import com.cyf.exception.RpcException;
 import com.cyf.extension.ExtensionLoader;
 import com.cyf.registry.ServiceRegistry;
-import com.cyf.remote.netty.server.NettyService;
+import com.cyf.remote.transport.netty.server.NettyService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 

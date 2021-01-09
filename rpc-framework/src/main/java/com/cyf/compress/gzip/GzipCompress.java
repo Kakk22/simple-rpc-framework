@@ -1,7 +1,6 @@
 package com.cyf.compress.gzip;
 
 import com.cyf.compress.Compress;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.ByteArrayInputStream;

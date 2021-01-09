@@ -1,7 +1,7 @@
 package com.cyf.config;
 
 import com.cyf.registry.zk.util.CuratorUtils;
-import com.cyf.remote.netty.server.NettyService;
+import com.cyf.remote.transport.netty.server.NettyService;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetAddress;

@@ -6,10 +6,14 @@ import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.imps.CuratorFrameworkState;
+import org.apache.curator.framework.recipes.cache.PathChildrenCache;
+import org.apache.curator.framework.recipes.cache.PathChildrenCacheListener;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
 
 import java.net.InetSocketAddress;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,6 +32,7 @@ public final class CuratorUtils {
 
     private static final int BASE_SLEEP_TIME = 1000;
     private static final int MAX_RETRIES = 3;
+    private static final Map<String, List<String>> SERVICE_ADDRESS_MAP = new ConcurrentHashMap<>();
     public static final String ZK_REGISTRY_ROOT_PATH = "my-rpc";
     private static final String DEFAULT_ZK_ADDRESS = "127.0.0.1:2181";
     private static final Set<String> REGISTRY_PATH_SET = ConcurrentHashMap.newKeySet();
@@ -89,5 +94,45 @@ public final class CuratorUtils {
             }
         });
         log.info("All registered services on the server are cleared:[{}]", REGISTRY_PATH_SET.toString());
+    }
+
+    /**
+     * 获取服务名的地址列表
+     *
+     * @param rpcServiceName 服务名 如:com.cyf.HelloService
+     * @return 在指定节点下的子节点
+     */
+    public static List<String> getChildrenNodes(CuratorFramework zkClient, String rpcServiceName) {
+        if (SERVICE_ADDRESS_MAP.containsKey(rpcServiceName)) {
+            return SERVICE_ADDRESS_MAP.get(rpcServiceName);
+        }
+        String path = ZK_REGISTRY_ROOT_PATH + "/" + rpcServiceName;
+        List<String> result = null;
+        try {
+            result = zkClient.getChildren().forPath(path);
+            SERVICE_ADDRESS_MAP.put(rpcServiceName, result);
+            //注册监听器
+            registerWatcher(rpcServiceName, zkClient);
+        } catch (Exception e) {
+            log.error("zkClient get children node for path [{}] error", path);
+        }
+        return result;
+    }
+
+    /**
+     * Registers to listen for changes to the specified node
+     *
+     * @param rpcServiceName 服务名 如:com.cyf.HelloService
+     */
+    private static void registerWatcher(String rpcServiceName, CuratorFramework zkClient) throws Exception {
+        String servicePath = ZK_REGISTRY_ROOT_PATH + "/" + rpcServiceName;
+        PathChildrenCache pathChildrenCache = new PathChildrenCache(zkClient, servicePath, true);
+        PathChildrenCacheListener pathChildrenCacheListener = (curatorFramework, pathChildrenCacheEvent) -> {
+            //监听事件触发 修改节点后修改map缓存
+            List<String> serviceAddress = curatorFramework.getChildren().forPath(servicePath);
+            SERVICE_ADDRESS_MAP.put(rpcServiceName, serviceAddress);
+        };
+        pathChildrenCache.getListenable().addListener(pathChildrenCacheListener);
+        pathChildrenCache.start();
     }
 }

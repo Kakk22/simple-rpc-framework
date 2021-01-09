@@ -27,10 +27,6 @@ public class RpcMessage {
      */
     private byte compressType;
     /**
-     * 请求id
-     */
-    private int requestId;
-    /**
      * rpcResponse or rpcRequest
      */
     private Object data;
