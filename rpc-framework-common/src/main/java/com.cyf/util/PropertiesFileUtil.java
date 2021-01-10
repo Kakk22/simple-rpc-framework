@@ -4,7 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
@@ -21,13 +23,15 @@ public final class PropertiesFileUtil {
     }
 
     public static Properties readPropertiesFile(String fileName) {
-//        URL url = Thread.currentThread().getContextClassLoader().getResource("");
-//        String rpcConfigPath = "";
-//        if (url != null) {
-//            rpcConfigPath = url.getPath() + fileName;
-//            System.out.println(rpcConfigPath);
-//        }
-        String rpcConfigPath = "D:\\java exercise\\github\\simple-rpc-framework\\example-server\\target\\classes\\rpc.properties";
+        URL url = Thread.currentThread().getContextClassLoader().getResource("");
+        String rpcConfigPath = "";
+        if (url != null) {
+            try {
+                rpcConfigPath = URLDecoder.decode(url.getPath() + fileName, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                log.error(e.getMessage());
+            }
+        }
         Properties properties = null;
         try (InputStreamReader reader = new InputStreamReader(
                 new FileInputStream(rpcConfigPath), StandardCharsets.UTF_8)) {
