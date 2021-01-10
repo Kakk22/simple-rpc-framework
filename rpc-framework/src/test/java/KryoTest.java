@@ -17,7 +17,7 @@ public class KryoTest {
     public void t1(){
         Serializer kryo = ExtensionLoader.getExtensionLoader(Serializer.class).getExtension("kryo");
 
-        RpcMessage rpcMessage = RpcMessage.builder().requestId(1).codec((byte) 1).messageType((byte) 1).compress((byte) 22).build();
+        RpcMessage rpcMessage = RpcMessage.builder().codec((byte) 1).messageType((byte) 1).compressType((byte) 22).build();
         RpcRequest hello = RpcRequest.builder().version("1").group("1").interfaceName("hello").build();
         rpcMessage.setData(hello);
         byte[] serialize = kryo.serialize(rpcMessage);

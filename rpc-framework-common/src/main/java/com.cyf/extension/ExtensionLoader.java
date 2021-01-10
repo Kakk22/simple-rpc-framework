@@ -86,7 +86,7 @@ public final class ExtensionLoader<T> {
     private T createExtension(String name) {
         Class<?> clazz = getExtensionClass().get(name);
         if (clazz == null) {
-            throw new RuntimeException("No such extension of name" + name);
+            throw new RuntimeException("No such extension of name:" + name);
         }
         T instance = (T) EXTENSION_INSTANCE.get(clazz);
         if (instance == null) {

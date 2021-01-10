@@ -21,11 +21,13 @@ public final class PropertiesFileUtil {
     }
 
     public static Properties readPropertiesFile(String fileName) {
-        URL url = Thread.currentThread().getContextClassLoader().getResource("");
-        String rpcConfigPath = "";
-        if (url != null) {
-            rpcConfigPath = url.getPath() + fileName;
-        }
+//        URL url = Thread.currentThread().getContextClassLoader().getResource("");
+//        String rpcConfigPath = "";
+//        if (url != null) {
+//            rpcConfigPath = url.getPath() + fileName;
+//            System.out.println(rpcConfigPath);
+//        }
+        String rpcConfigPath = "D:\\java exercise\\github\\simple-rpc-framework\\example-server\\target\\classes\\rpc.properties";
         Properties properties = null;
         try (InputStreamReader reader = new InputStreamReader(
                 new FileInputStream(rpcConfigPath), StandardCharsets.UTF_8)) {
@@ -33,7 +35,7 @@ public final class PropertiesFileUtil {
             //加载流对象 properties实际为一个map 键值对形式
             properties.load(reader);
         } catch (Exception e) {
-            log.error("error when read properties file {}", fileName);
+            log.error("error when read properties file {},error msg:{}", fileName, e.getMessage());
         }
         return properties;
     }

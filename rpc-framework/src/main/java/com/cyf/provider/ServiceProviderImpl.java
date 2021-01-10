@@ -5,7 +5,7 @@ import com.cyf.enums.RpcErrorMessagesEnum;
 import com.cyf.exception.RpcException;
 import com.cyf.extension.ExtensionLoader;
 import com.cyf.registry.ServiceRegistry;
-import com.cyf.remote.transport.netty.server.NettyService;
+import com.cyf.remote.transport.netty.server.NettyServer;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
@@ -69,6 +69,6 @@ public class ServiceProviderImpl implements ServiceProvider {
         String rpcServiceName = rpcServiceProperties.toRpcServiceName();
         this.addService(service, rpcServiceName);
         // 服务注册
-        serviceRegistry.registryService(rpcServiceName, new InetSocketAddress(host, NettyService.PORT));
+        serviceRegistry.registryService(rpcServiceName, new InetSocketAddress(host, NettyServer.PORT));
     }
 }

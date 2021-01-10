@@ -83,9 +83,9 @@ public class RpcMessageEncoder extends MessageToByteEncoder<RpcMessage> {
 
             int writerIndex = out.writerIndex();
             //写入int改为 长度域下标
-            out.writeInt(writerIndex - fullLength - MAGIC_NUMBER.length + 1);
-            out.writeByte(fullLength);
-            out.writeInt(writerIndex);
+            out.writerIndex(writerIndex - fullLength + MAGIC_NUMBER.length + 1);
+            out.writeInt(fullLength);
+            out.writerIndex(writerIndex);
         } catch (Exception e) {
             log.error("encoder fail:" + e.getMessage());
         }

@@ -33,7 +33,7 @@ public final class CuratorUtils {
     private static final int BASE_SLEEP_TIME = 1000;
     private static final int MAX_RETRIES = 3;
     private static final Map<String, List<String>> SERVICE_ADDRESS_MAP = new ConcurrentHashMap<>();
-    public static final String ZK_REGISTRY_ROOT_PATH = "my-rpc";
+    public static final String ZK_REGISTRY_ROOT_PATH = "/my-rpc";
     private static final String DEFAULT_ZK_ADDRESS = "127.0.0.1:2181";
     private static final Set<String> REGISTRY_PATH_SET = ConcurrentHashMap.newKeySet();
     private static CuratorFramework zkClient;
@@ -58,6 +58,7 @@ public final class CuratorUtils {
                 .connectString(zookeeperAddress)
                 .retryPolicy(retryPolicy)
                 .build();
+        zkClient.start();
         return zkClient;
     }
 
@@ -76,7 +77,7 @@ public final class CuratorUtils {
             }
             REGISTRY_PATH_SET.add(path);
         } catch (Exception e) {
-            log.error("create persistent node error,node path {} ", path);
+            log.error("create persistent node error,node path {},error msg:{} ", path, e.getMessage());
         }
     }
 

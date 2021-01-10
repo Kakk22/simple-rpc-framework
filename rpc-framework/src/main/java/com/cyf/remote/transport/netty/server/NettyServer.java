@@ -33,15 +33,9 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  **/
 @Slf4j
 @Component
-public class NettyService {
+public class NettyServer {
 
     public static final int PORT = 9998;
-
-    private final ServiceProvider serviceProvider = SingletonFactory.getInstance(ServiceProviderImpl.class);
-
-    public void registryService(Object service, RpcServiceProperties rpcServiceProperties) {
-        serviceProvider.publishService(service, rpcServiceProperties);
-    }
 
     @SneakyThrows
     public void start() {

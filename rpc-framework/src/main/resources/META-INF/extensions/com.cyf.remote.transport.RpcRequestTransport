@@ -1,0 +1,1 @@
+netty = com.cyf.remote.transport.netty.client.NettyClient

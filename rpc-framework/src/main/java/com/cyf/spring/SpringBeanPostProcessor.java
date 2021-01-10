@@ -49,6 +49,11 @@ public class SpringBeanPostProcessor implements BeanPostProcessor {
     }
 
 
+    /**
+     * bean 后置处理器
+     * 扫描bean是否有@RpcReference注解的属性
+     * 有则设置其代理对象
+     */
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         Class<?> targetClass = bean.getClass();
@@ -66,7 +71,7 @@ public class SpringBeanPostProcessor implements BeanPostProcessor {
                 Object clientProxy = rpcClientProxy.getProxy(declaredField.getType());
                 declaredField.setAccessible(true);
                 try {
-                    //设置该字段为代理对象
+                    //设置该字段对象为代理对象
                     declaredField.set(bean, clientProxy);
                 } catch (IllegalAccessException e) {
                     log.error("set bean proxy error:", e);

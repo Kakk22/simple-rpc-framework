@@ -1,11 +1,14 @@
 package com.cyf.compress;
 
+import com.cyf.extension.SPI;
+
 /**
  * 压缩接口
  *
  * @author 陈一锋
  * @date 2021/1/3 22:23
  **/
+@SPI
 public interface Compress {
 
     /**

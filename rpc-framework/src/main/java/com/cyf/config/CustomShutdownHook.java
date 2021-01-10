@@ -1,7 +1,7 @@
 package com.cyf.config;
 
 import com.cyf.registry.zk.util.CuratorUtils;
-import com.cyf.remote.transport.netty.server.NettyService;
+import com.cyf.remote.transport.netty.server.NettyServer;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetAddress;
@@ -27,7 +27,7 @@ public class CustomShutdownHook {
         //添加关闭钩子
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
-                InetSocketAddress inetSocketAddress = new InetSocketAddress(InetAddress.getLocalHost().getHostAddress(), NettyService.PORT);
+                InetSocketAddress inetSocketAddress = new InetSocketAddress(InetAddress.getLocalHost().getHostAddress(), NettyServer.PORT);
                 CuratorUtils.clearRegistry(CuratorUtils.getZkClient(), inetSocketAddress);
             } catch (UnknownHostException e) {
                 log.error(e.getMessage());
